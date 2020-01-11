@@ -1,0 +1,297 @@
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 18:56 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+tanvir@BS-107:~$ touch kube-dashboard-access.yaml
+tanvir@BS-107:~$ nano kube-dashboard-access.yaml
+tanvir@BS-107:~$ kubectl apply -f kube-dashboard-access.yaml
+clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+tanvir@BS-107:~$ kubectl create namespace ingress-basic
+namespace/ingress-basic created
+tanvir@BS-107:~$ helm list ingress-basic
+Error: "helm list" accepts no arguments
+
+Usage:  helm list [flags]
+tanvir@BS-107:~$ helm list --namespace ingress-basic
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+tanvir@BS-107:~$ name="tanvir"
+tanvir@BS-107:~$ echo $name
+tanvir@BS-107:~$ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+tanvir@BS-107:~$ echo PUBLICIPID
+PUBLICIPID
+tanvir@BS-107:~$ echo $PUBLICIPID
+/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/MC_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/e56919f0-f303-4f6d-8935-1a167a0ae5ff
+tanvir@BS-107:~$ kubectl get pods
+No resources found in default namespace.
+tanvir@BS-107:~$ kubectl get pods -n kb-test
+No resources found in kb-test namespace.
+tanvir@BS-107:~$ kubectl get pods -n ingress-basic
+No resources found in ingress-basic namespace.
+tanvir@BS-107:~$ kubectl get service
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP   45m
+tanvir@BS-107:~$ kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP   46m
+tanvir@BS-107:~$ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+"stable" has been added to your repositories
+tanvir@BS-107:~$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+tanvir@BS-107:~$ helm install stable/nginx-ingress --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux  --namespace ingress-basic --generate-name
+NAME: nginx-ingress-1578577849
+LAST DEPLOYED: Thu Jan  9 19:50:55 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+The nginx-ingress controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace ingress-basic get services -o wide -w nginx-ingress-1578577849-controller'
+
+An example Ingress that makes use of the controller:
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+tanvir@BS-107:~$ kubectl get pods
+No resources found in default namespace.
+tanvir@BS-107:~$ kubectl get pods -n ingress-basic
+NAME                                                        READY   STATUS    RESTARTS   AGE
+nginx-ingress-1578577849-controller-d7ffbc49-gbnlz          0/1     Running   0          67s
+nginx-ingress-1578577849-controller-d7ffbc49-qjsgb          0/1     Running   0          67s
+nginx-ingress-1578577849-default-backend-7964c7479d-v922d   1/1     Running   0          67s
+tanvir@BS-107:~$ kubectl get service -l app=nginx-ingress --namespace ingress-basic
+NAME                                       TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE
+nginx-ingress-1578577849-controller        LoadBalancer   10.0.243.101   52.149.249.147   80:32612/TCP,443:32491/TCP   2m21s
+nginx-ingress-1578577849-default-backend   ClusterIP      10.0.217.188   <none>           80/TCP                       2m21s
+tanvir@BS-107:~$ helm list -n ingress-basic
+NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS         CHART                                                                                                                APP VERSION
+nginx-ingress-1578577849        ingress-basic   1               2020-01-09 19:50:55.7689814 +0600 +06   deployed       nginx-ingress-1.28.2                                                                                                 0.26.2
+tanvir@BS-107:~$ DNSNAME=tanvir
+tanvir@BS-107:~$ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+{
+  "ddosSettings": null,
+  "dnsSettings": {
+    "domainNameLabel": "tanvir",
+    "fqdn": "tanvir.eastus.cloudapp.azure.com",
+    "reverseFqdn": null
+  },
+  "etag": "W/\"59d74b42-1876-4360-8a3b-1b03628e09b8\"",
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/MC_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+  "idleTimeoutInMinutes": 30,
+  "ipAddress": "52.152.185.205",
+  "ipConfiguration": {
+    "etag": null,
+    "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/loadBalancers/kubernetes/frontendIPConfigurations/1-e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+    "name": null,
+    "privateIpAddress": null,
+    "privateIpAllocationMethod": null,
+    "provisioningState": null,
+    "publicIpAddress": null,
+    "resourceGroup": "mc_tanvir_kb-test_eastus",
+    "subnet": null
+  },
+  "ipTags": [],
+  "location": "eastus",
+  "name": "e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+  "provisioningState": "Succeeded",
+  "publicIpAddressVersion": "IPv4",
+  "publicIpAllocationMethod": "Static",
+  "publicIpPrefix": null,
+  "resourceGroup": "MC_tanvir_kb-test_eastus",
+  "resourceGuid": "99b30008-b4fc-43dc-be6a-1d1253f0e1a2",
+  "sku": {
+    "name": "Standard"
+  },
+  "tags": {
+    "owner": "kubernetes",
+    "type": "aks-slb-managed-outbound-ip"
+  },
+  "type": "Microsoft.Network/publicIPAddresses",
+  "zones": null
+}
+tanvir@BS-107:~$ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+tanvir@BS-107:~$ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/MC_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/e56919f0-f303-4f6d-8935-1a167a0ae5ff: "Azure Error: DnsRecordInUse
+Message: DNS record tanvir.eastus.cloudapp.azure.com is already used by another public IP."
+Encountered more than one exception.
+{
+  "ddosSettings": null,
+  "dnsSettings": {
+    "domainNameLabel": "tanvir",
+    "fqdn": "tanvir.eastus.cloudapp.azure.com",
+    "reverseFqdn": null
+  },
+  "etag": "W/\"ab30dcd7-f22f-46ff-8eec-0b9cb708099f\"",
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/MC_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+  "idleTimeoutInMinutes": 30,
+  "ipAddress": "52.152.185.205",
+  "ipConfiguration": {
+    "etag": null,
+    "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/loadBalancers/kubernetes/frontendIPConfigurations/1-e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+    "name": null,
+    "privateIpAddress": null,
+    "privateIpAllocationMethod": null,
+    "provisioningState": null,
+    "publicIpAddress": null,
+    "resourceGroup": "mc_tanvir_kb-test_eastus",
+    "subnet": null
+  },
+  "ipTags": [],
+  "location": "eastus",
+  "name": "e56919f0-f303-4f6d-8935-1a167a0ae5ff",
+  "provisioningState": "Succeeded",
+  "publicIpAddressVersion": "IPv4",
+  "publicIpAllocationMethod": "Static",
+  "publicIpPrefix": null,
+  "resourceGroup": "MC_tanvir_kb-test_eastus",
+  "resourceGuid": "99b30008-b4fc-43dc-be6a-1d1253f0e1a2",
+  "sku": {
+    "name": "Standard"
+  },
+  "tags": {
+    "owner": "kubernetes",
+    "type": "aks-slb-managed-outbound-ip"
+  },
+  "type": "Microsoft.Network/publicIPAddresses",
+  "zones": null
+}
+tanvir@BS-107:~$ kubectl get service -l app=nginx-ingress --namespace ingress-basic
+NAME                                       TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE
+nginx-ingress-1578577849-controller        LoadBalancer   10.0.243.101   52.149.249.147   80:32612/TCP,443:32491/TCP   14m
+nginx-ingress-1578577849-default-backend   ClusterIP      10.0.217.188   <none>           80/TCP                       14m
+tanvir@BS-107:~$ IP = 52.149.249.147
+IP: command not found
+tanvir@BS-107:~$ IP=52.149.249.147
+tanvir@BS-107:~$ echo UP
+UP
+tanvir@BS-107:~$ echo IP
+IP
+tanvir@BS-107:~$ echo $IP
+52.149.249.147
+tanvir@BS-107:~$ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+tanvir@BS-107:~$ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+DNS record tanvir.eastus.cloudapp.azure.com is already used by another public IP.
+tanvir@BS-107:~$ az network public-ip delete --ids $PUBLICIPID
+Public IP address /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/kubernetes-a13b844bea81640d58aaed950596770b can not be deleted since it is still allocated to resource /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/loadBalancers/kubernetes/frontendIPConfigurations/a13b844bea81640d58aaed950596770b. In order to delete the public IP, disassociate/detach the Public IP address from the resource.  To learn how to do this, see aka.ms/deletepublicip.
+tanvir@BS-107:~$ DNSNAME=tanvi
+tanvir@BS-107:~$ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+tanvir@BS-107:~$ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+{
+  "ddosSettings": null,
+  "dnsSettings": {
+    "domainNameLabel": "tanvi",
+    "fqdn": "tanvi.eastus.cloudapp.azure.com",
+    "reverseFqdn": null
+  },
+  "etag": "W/\"5bada368-fadc-440d-b322-58166460c8c9\"",
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/publicIPAddresses/kubernetes-a13b844bea81640d58aaed950596770b",
+  "idleTimeoutInMinutes": 4,
+  "ipAddress": "52.149.249.147",
+  "ipConfiguration": {
+    "etag": null,
+    "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kb-test_eastus/providers/Microsoft.Network/loadBalancers/kubernetes/frontendIPConfigurations/a13b844bea81640d58aaed950596770b",
+    "name": null,
+    "privateIpAddress": null,
+    "privateIpAllocationMethod": null,
+    "provisioningState": null,
+    "publicIpAddress": null,
+    "resourceGroup": "mc_tanvir_kb-test_eastus",
+    "subnet": null
+  },
+  "ipTags": [],
+  "location": "eastus",
+  "name": "kubernetes-a13b844bea81640d58aaed950596770b",
+  "provisioningState": "Succeeded",
+  "publicIpAddressVersion": "IPv4",
+  "publicIpAllocationMethod": "Static",
+  "publicIpPrefix": null,
+  "resourceGroup": "mc_tanvir_kb-test_eastus",
+  "resourceGuid": "b01fe33c-ea86-4a8d-b15d-6e1df2a46ef3",
+  "sku": {
+    "name": "Standard"
+  },
+  "tags": {
+    "kubernetes-cluster-name": "kubernetes",
+    "service": "ingress-basic/nginx-ingress-1578577849-controller"
+  },
+  "type": "Microsoft.Network/publicIPAddresses",
+  "zones": null
+}
+tanvir@BS-107:~$ helm repo add azure-samples https://azure-samples.github.io/helm-charts/
+"azure-samples" has been added to your repositories
+tanvir@BS-107:~$ helm install azure-samples/aks-helloworld --namespace ingress-basic
+Error: must either provide a name or specify --generate-name
+tanvir@BS-107:~$ helm install azure-samples/aks-helloworld --namespace ingress-basic --generate-name
+NAME: aks-helloworld-1578578943
+LAST DEPLOYED: Thu Jan  9 20:09:08 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+tanvir@BS-107:~$ helm install azure-samples/aks-helloworld    --namespace ingress-basic  --set title="AKS Ingress Demo" --set serviceName="ingress-demo" --generate-name
+NAME: aks-helloworld-1578579061
+LAST DEPLOYED: Thu Jan  9 20:11:06 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+tanvir@BS-107:~$ nano cluster-ingress.yaml
+tanvir@BS-107:~$ kubectl apply -f cluster-ingress.yaml
+ingress.extensions/hello-world-ingress created
+tanvir@BS-107:~$

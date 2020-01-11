@@ -1,0 +1,84 @@
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 workshop-on-k8s-with-aks/
+tanvir@BS-107:~$ cd workshop-on-k8s-with-aks/
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ ll
+total 4
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 ./
+drwxr-xr-x 1 tanvir tanvir 512 Jan 11 14:53 ../
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 .git/
+-rw-rw-rw- 1 tanvir tanvir 251 Jan 11 14:53 .gitignore
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 Kube/
+-rw-rw-rw- 1 tanvir tanvir 884 Jan 11 14:53 README.md
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ c Kube/
+c: command not found
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ cd Kube/
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ ll
+total 12
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 ../
+-rw-rw-rw- 1 tanvir tanvir  442 Jan 11 14:53 certificates.yaml
+-rw-rw-rw- 1 tanvir tanvir  691 Jan 11 14:53 cluster-ingress.yaml
+-rw-rw-rw- 1 tanvir tanvir  337 Jan 11 14:53 cluster-issuer.yaml
+-rw-rw-rw- 1 tanvir tanvir 5796 Jan 11 14:53 installation.ps1
+-rw-rw-rw- 1 tanvir tanvir  324 Jan 11 14:53 kube-dashboard-access.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-issuer.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano certificates.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f .\certificates.yaml
+error: the path ".certificates.yaml" does not exist
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f certificates.yaml
+certificate.cert-manager.io/saory3-eastus-cloudapp-azure-com-cert-staging created
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ cd ..
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ kubectl get certificates -n ingress-basic
+NAME                                            READY   SECRET                                     AGE
+saory3-eastus-cloudapp-azure-com-cert-staging   True    saory3-eastus-cloudapp-azure-com-staging   28s
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ cd Kube
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ ll
+total 12
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 16:27 ./
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 ../
+-rw-rw-rw- 1 tanvir tanvir  444 Jan 11 16:27 certificates.yaml
+-rw-rw-rw- 1 tanvir tanvir  692 Jan 11 16:16 cluster-ingress.yaml
+-rw-rw-rw- 1 tanvir tanvir  337 Jan 11 16:24 cluster-issuer.yaml
+-rw-rw-rw- 1 tanvir tanvir 5796 Jan 11 14:53 installation.ps1
+-rw-rw-rw- 1 tanvir tanvir  324 Jan 11 14:53 kube-dashboard-access.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+Use "fg" to return to nano.
+
+[1]+  Stopped                 nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl get certificates -n ingress-basic
+NAME                                            READY   SECRET                                     AGE
+saory3-eastus-cloudapp-azure-com-cert-staging   True    saory3-eastus-cloudapp-azure-com-staging   22m
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano certificates.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+Use "fg" to return to nano.
+
+[2]+  Stopped                 nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+Use "fg" to return to nano.
+
+[3]+  Stopped                 nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ nano cluster-ingress.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ pwd
+/home/tanvir/workshop-on-k8s-with-aks/Kube
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f cluster-ingress.yaml
+ingress.extensions/hello-world-ingress created
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$

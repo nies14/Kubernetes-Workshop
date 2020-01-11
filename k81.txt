@@ -1,0 +1,269 @@
+Installing, this may take a few minutes...
+Please create a default UNIX user account. The username does not need to match your Windows username.
+For more information visit: https://aka.ms/wslusers
+Enter new UNIX username: tanvir
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+Installation successful!
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+tanvir@BS-107:~$ sudo apt-get update
+[sudo] password for tanvir:
+Hit:1 http://archive.ubuntu.com/ubuntu bionic InRelease
+Get:2 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [8570 kB]
+Get:6 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [606 kB]
+Get:7 http://security.ubuntu.com/ubuntu bionic-security/main Translation-en [196 kB]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [17.0 kB]
+Get:9 http://security.ubuntu.com/ubuntu bionic-security/restricted Translation-en [5032 B]
+Get:10 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [628 kB]
+Get:11 http://security.ubuntu.com/ubuntu bionic-security/universe Translation-en [210 kB]
+Get:12 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [6120 B]
+Get:13 http://security.ubuntu.com/ubuntu bionic-security/multiverse Translation-en [2600 B]
+Get:14 http://archive.ubuntu.com/ubuntu bionic/universe Translation-en [4941 kB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [151 kB]
+Get:16 http://archive.ubuntu.com/ubuntu bionic/multiverse Translation-en [108 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [830 kB]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-updates/main Translation-en [290 kB]
+Get:19 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [26.0 kB]
+Get:20 http://archive.ubuntu.com/ubuntu bionic-updates/restricted Translation-en [6976 B]
+Get:21 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1035 kB]
+Get:22 http://archive.ubuntu.com/ubuntu bionic-updates/universe Translation-en [320 kB]
+Get:23 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [9500 B]
+Get:24 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse Translation-en [4540 B]
+Get:25 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2512 B]
+Get:26 http://archive.ubuntu.com/ubuntu bionic-backports/main Translation-en [1644 B]
+Get:27 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [4044 B]
+Get:28 http://archive.ubuntu.com/ubuntu bionic-backports/universe Translation-en [1900 B]
+Fetched 18.2 MB in 1min 2s (296 kB/s)
+Reading package lists... Done
+tanvir@BS-107:~$ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+Hit:1 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:2 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+apt-get install -y apt-transport-https lsb-release gnupg curl
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+lsb-release is already the newest version (9.20170808ubuntu1).
+lsb-release set to manually installed.
+gnupg is already the newest version (2.2.4-1ubuntu1.2).
+gnupg set to manually installed.
+The following package was automatically installed and is no longer required:
+  libfreetype6
+Use 'apt autoremove' to remove it.
+The following NEW packages will be installed:
+  apt-transport-https
+The following packages will be upgraded:
+  curl libcurl4 libssl1.1
+3 upgraded, 1 newly installed, 0 to remove and 128 not upgraded.
+Need to get 1675 kB of archives.
+After this operation, 688 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libssl1.1 amd64 1.1.1-1ubuntu2.1~18.04.5 [1300 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 apt-transport-https all 1.6.12 [1692 B]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 curl amd64 7.58.0-2ubuntu3.8 [159 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl4 amd64 7.58.0-2ubuntu3.8 [214 kB]
+Fetched 1675 kB in 2s (673 kB/s)
+Preconfiguring packages ...
+(Reading database ... 28645 files and directories currently installed.)
+Preparing to unpack .../libssl1.1_1.1.1-1ubuntu2.1~18.04.5_amd64.deb ...
+Unpacking libssl1.1:amd64 (1.1.1-1ubuntu2.1~18.04.5) over (1.1.0g-2ubuntu4.3) ...
+Selecting previously unselected package apt-transport-https.
+Preparing to unpack .../apt-transport-https_1.6.12_all.deb ...
+Unpacking apt-transport-https (1.6.12) ...
+Preparing to unpack .../curl_7.58.0-2ubuntu3.8_amd64.deb ...
+Unpacking curl (7.58.0-2ubuntu3.8) over (7.58.0-2ubuntu3.6) ...
+Preparing to unpack .../libcurl4_7.58.0-2ubuntu3.8_amd64.deb ...
+Unpacking libcurl4:amd64 (7.58.0-2ubuntu3.8) over (7.58.0-2ubuntu3.6) ...
+Setting up apt-transport-https (1.6.12) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Setting up libssl1.1:amd64 (1.1.1-1ubuntu2.1~18.04.5) ...
+Checking for services that may need to be restarted...done.
+Checking for services that may need to be restarted...done.
+Checking init scripts...
+
+Restarting services possibly affected by the upgrade:
+invoke-rc.d: could not determine current runlevel
+
+Services restarted successfully.
+
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Setting up libcurl4:amd64 (7.58.0-2ubuntu3.8) ...
+Setting up curl (7.58.0-2ubuntu3.8) ...
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+set +v
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+set +v
+CLI_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
+    > /etc/apt/sources.list.d/azure-cli.list
+apt-get update
+Get:1 https://packages.microsoft.com/repos/azure-cli bionic InRelease [3964 B]
+Hit:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:4 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Get:6 https://packages.microsoft.com/repos/azure-cli bionic/main amd64 Packages [7745 B]
+Fetched 11.7 kB in 5s (2409 B/s)
+Reading package lists... Done
+set +v
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfreetype6
+Use 'apt autoremove' to remove it.
+The following NEW packages will be installed:
+  azure-cli
+0 upgraded, 1 newly installed, 0 to remove and 128 not upgraded.
+Need to get 46.0 MB of archives.
+After this operation, 477 MB of additional disk space will be used.
+Get:1 https://packages.microsoft.com/repos/azure-cli bionic/main amd64 azure-cli all 2.0.79-1~bionic [46.0 MB]
+Fetched 46.0 MB in 4s (11.4 MB/s)
+Selecting previously unselected package azure-cli.
+(Reading database ... 28650 files and directories currently installed.)
+Preparing to unpack .../azure-cli_2.0.79-1~bionic_all.deb ...
+Unpacking azure-cli (2.0.79-1~bionic) ...
+^[[B^[[A
+Setting up azure-cli (2.0.79-1~bionic) ...
+tanvir@BS-107:~$ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+Hit:1 https://packages.microsoft.com/repos/azure-cli bionic InRelease
+Hit:2 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+apt-get install -y apt-transport-https lsb-release gnupg curl
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+lsb-release is already the newest version (9.20170808ubuntu1).
+curl is already the newest version (7.58.0-2ubuntu3.8).
+gnupg is already the newest version (2.2.4-1ubuntu1.2).
+apt-transport-https is already the newest version (1.6.12).
+The following package was automatically installed and is no longer required:
+  libfreetype6
+Use 'apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 128 not upgraded.
+set +v
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+set +v
+CLI_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
+    > /etc/apt/sources.list.d/azure-cli.list
+apt-get update
+Hit:1 https://packages.microsoft.com/repos/azure-cli bionic InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:4 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+set +v
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+azure-cli is already the newest version (2.0.79-1~bionic).
+The following package was automatically installed and is no longer required:
+  libfreetype6
+Use 'apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 128 not upgraded.
+tanvir@BS-107:~$ az --version
+azure-cli                         2.0.79
+
+command-modules-nspkg              2.0.3
+core                              2.0.79
+nspkg                              3.0.4
+telemetry                          1.0.4
+
+Python location '/opt/az/bin/python3'
+Extensions directory '/home/tanvir/.azure/cliextensions'
+
+Python (Linux) 3.6.5 (default, Jan  3 2020, 07:34:08)
+[GCC 7.4.0]
+
+Legal docs and information: aka.ms/AzureCliLegal
+
+
+
+Your CLI is up-to-date.
+
+Please let us know how we are doing: https://aka.ms/clihats
+tanvir@BS-107:~$ az login
+'\\wsl$\Ubuntu-18.04\home\tanvir'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "7e862db6-4127-4495-a522-d82071ca3931",
+    "isDefault": true,
+    "name": "Pay As You Go",
+    "state": "Enabled",
+    "tenantId": "0d357441-0455-4000-8899-db665d0a6e15",
+    "user": {
+      "name": "tanvirhassan970@gmail.com",
+      "type": "user"
+    }
+  }
+]
+tanvir@BS-107:~$ az aks install-cli
+Downloading client to "/usr/local/bin/kubectl" from "https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl"
+Connection error while attempting to download client ([Errno 13] Permission denied: '/usr/local/bin/kubectl')
+tanvir@BS-107:~$ sudo az aks install-cli
+Downloading client to "/usr/local/bin/kubectl" from "https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl"
+Please ensure that /usr/local/bin is in your search PATH, so the `kubectl` command can be found.
+tanvir@BS-107:~$ kubectl version
+Client Version: version.Info{Major:"1", Minor:"17", GitVersion:"v1.17.0", GitCommit:"70132b0f130acc0bed193d9ba59dd186f0e634cf", GitTreeState:"clean", BuildDate:"2019-12-07T21:20:10Z", GoVersion:"go1.13.4", Compiler:"gc", Platform:"linux/amd64"}
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+tanvir@BS-107:~$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+tanvir@BS-107:~$ chmod 700 get_helm.sh
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 18:49 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+tanvir@BS-107:~$ chmod 700 get_helm.sh
+tanvir@BS-107:~$ ./get_helm.sh
+Downloading https://get.helm.sh/helm-v3.0.2-linux-amd64.tar.gz
+Preparing to install helm into /usr/local/bin
+helm installed into /usr/local/bin/helm
+tanvir@BS-107:~$ helm --version
+Error: unknown flag: --version
+tanvir@BS-107:~$ helm version
+version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
+tanvir@BS-107:~$ az aks get-credentials -g tanvir -n kb-test
+Merged "kb-test" as current context in /home/tanvir/.kube/config
+tanvir@BS-107:~$ az aks browse -g tanvir -n kb-test
+Merged "kb-test" as current context in /tmp/tmpn5zwqera
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+error: unable to forward port because pod is not running. Current status=Pending
+tanvir@BS-107:~$ az aks browse -g tanvir -n kb-test
+Merged "kb-test" as current context in /tmp/tmp21ipsrdb
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+tanvir@BS-107:~$ az aks browse -g tanvir -n kb-test
+Merged "kb-test" as current context in /tmp/tmp4eprdans
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+tanvir@BS-107:~$ az aks browse -g tanvir -n kb-test
+Merged "kb-test" as current context in /tmp/tmpf7y4h_r6
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+tanvir@BS-107:~$

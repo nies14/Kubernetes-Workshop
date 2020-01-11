@@ -1,0 +1,543 @@
+tanvir@BS-107:~$ az login
+'\\wsl$\Ubuntu-18.04\home\tanvir'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "7e862db6-4127-4495-a522-d82071ca3931",
+    "isDefault": true,
+    "name": "Pay As You Go",
+    "state": "Enabled",
+    "tenantId": "0d357441-0455-4000-8899-db665d0a6e15",
+    "user": {
+      "name": "tanvirhassan970@gmail.com",
+      "type": "user"
+    }
+  }
+]
+tanvir@BS-107:~$ az acr create --resource-group tanvir --name tanvir --sku Basic
+error retrieving default location: Resource group 'tanvir' could not be found.
+tanvir@BS-107:~$ az acr create --resource-group tanvir --name tanvir --sku Basic
+{
+  "adminUserEnabled": false,
+  "creationDate": "2020-01-11T08:30:56.328721+00:00",
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir",
+  "location": "eastus",
+  "loginServer": "tanvir.azurecr.io",
+  "name": "tanvir",
+  "networkRuleSet": null,
+  "policies": {
+    "quarantinePolicy": {
+      "status": "disabled"
+    },
+    "retentionPolicy": {
+      "days": 7,
+      "lastUpdatedTime": "2020-01-11T08:30:59.252753+00:00",
+      "status": "disabled"
+    },
+    "trustPolicy": {
+      "status": "disabled",
+      "type": "Notary"
+    }
+  },
+  "provisioningState": "Succeeded",
+  "resourceGroup": "tanvir",
+  "sku": {
+    "name": "Basic",
+    "tier": "Basic"
+  },
+  "status": null,
+  "storageAccount": null,
+  "tags": {},
+  "type": "Microsoft.ContainerRegistry/registries"
+}
+tanvir@BS-107:~$ az ad sp create-for-rbac --skip-assignment
+{
+  "appId": "f6292af8-501e-4761-ac60-1e721c423a18",
+  "displayName": "azure-cli-2020-01-11-08-34-19",
+  "name": "http://azure-cli-2020-01-11-08-34-19",
+  "password": "1c6fe5ed-9c72-45a2-a56e-7dce7b75bff5",
+  "tenant": "0d357441-0455-4000-8899-db665d0a6e15"
+}
+tanvir@BS-107:~$ az acr show --resource-group tanvir --name tanvir --query "id" --output tsv
+/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 20:52 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+tanvir@BS-107:~$ git clone https://github.com/thesufian/workshop-on-k8s-with-aks.git
+Cloning into 'workshop-on-k8s-with-aks'...
+remote: Enumerating objects: 33, done.
+remote: Counting objects: 100% (33/33), done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 33 (delta 8), reused 27 (delta 5), pack-reused 0
+Unpacking objects: 100% (33/33), done.
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 workshop-on-k8s-with-aks/
+tanvir@BS-107:~$ cd workshop-on-k8s-with-aks/
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ ll
+total 4
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 ./
+drwxr-xr-x 1 tanvir tanvir 512 Jan 11 14:53 ../
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 .git/
+-rw-rw-rw- 1 tanvir tanvir 251 Jan 11 14:53 .gitignore
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 Kube/
+-rw-rw-rw- 1 tanvir tanvir 884 Jan 11 14:53 README.md
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ cd Kube/
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ ll
+total 12
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 ../
+-rw-rw-rw- 1 tanvir tanvir  442 Jan 11 14:53 certificates.yaml
+-rw-rw-rw- 1 tanvir tanvir  691 Jan 11 14:53 cluster-ingress.yaml
+-rw-rw-rw- 1 tanvir tanvir  337 Jan 11 14:53 cluster-issuer.yaml
+-rw-rw-rw- 1 tanvir tanvir 5796 Jan 11 14:53 installation.ps1
+-rw-rw-rw- 1 tanvir tanvir  324 Jan 11 14:53 kube-dashboard-access.yaml
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ ..
+..: command not found
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ cd .
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ cd ..
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ cd ..
+tanvir@BS-107:~$ az role assignment create --assignee f6292af8-501e-4761-ac60-1e721c423a18 --scope /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir --role acrpull
+The client 'live.com#tanvirhassan970@gmail.com' with object id '92543879-7897-47b3-a55c-a2ef90628d4f' does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir/providers/Microsoft.Authorization/roleAssignments/f4484de9-253c-4e1a-b4d7-d4b48f02203b' or the scope is invalid. If access was recently granted, please refresh your credentials.
+tanvir@BS-107:~$ az role assignment create --assignee f6292af8-501e-4761-ac60-1e721c423a18 --scope /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir --role acrpull
+The client 'live.com#tanvirhassan970@gmail.com' with object id '92543879-7897-47b3-a55c-a2ef90628d4f' does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir/providers/Microsoft.Authorization/roleAssignments/dafe742a-a2e2-4356-87de-3b2097c66c8b' or the scope is invalid. If access was recently granted, please refresh your credentials.
+tanvir@BS-107:~$ az login
+'\\wsl$\Ubuntu-18.04\home\tanvir'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "7e862db6-4127-4495-a522-d82071ca3931",
+    "isDefault": true,
+    "name": "Pay As You Go",
+    "state": "Enabled",
+    "tenantId": "0d357441-0455-4000-8899-db665d0a6e15",
+    "user": {
+      "name": "tanvirhassan970@gmail.com",
+      "type": "user"
+    }
+  }
+]
+tanvir@BS-107:~$ az login
+'\\wsl$\Ubuntu-18.04\home\tanvir'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "7e862db6-4127-4495-a522-d82071ca3931",
+    "isDefault": true,
+    "name": "Pay As You Go",
+    "state": "Enabled",
+    "tenantId": "0d357441-0455-4000-8899-db665d0a6e15",
+    "user": {
+      "name": "tanvirhassan970@gmail.com",
+      "type": "user"
+    }
+  }
+]
+tanvir@BS-107:~$ az role assignment create --assignee f6292af8-501e-4761-ac60-1e721c423a18 --scope /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir --role acrpull
+The client 'live.com#tanvirhassan970@gmail.com' with object id '92543879-7897-47b3-a55c-a2ef90628d4f' does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir/providers/Microsoft.Authorization/roleAssignments/b5513c76-08ae-4a0a-8828-847f0e2c9692' or the scope is invalid. If access was recently granted, please refresh your credentials.
+tanvir@BS-107:~$ az login
+'\\wsl$\Ubuntu-18.04\home\tanvir'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+You have logged in. Now let us find all the subscriptions to which you have access...
+[
+  {
+    "cloudName": "AzureCloud",
+    "id": "7e862db6-4127-4495-a522-d82071ca3931",
+    "isDefault": true,
+    "name": "Pay As You Go",
+    "state": "Enabled",
+    "tenantId": "0d357441-0455-4000-8899-db665d0a6e15",
+    "user": {
+      "name": "tanvirhassan970@gmail.com",
+      "type": "user"
+    }
+  }
+]
+tanvir@BS-107:~$ az role assignment create --assignee f6292af8-501e-4761-ac60-1e721c423a18 --scope /subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir --role acrpull
+{
+  "canDelegate": null,
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir/providers/Microsoft.Authorization/roleAssignments/f74dbe8f-013d-4f7b-8b9e-57db3c29b3e5",
+  "name": "f74dbe8f-013d-4f7b-8b9e-57db3c29b3e5",
+  "principalId": "bc38e2a3-4210-4b73-aacc-1ac16758657b",
+  "principalType": "ServicePrincipal",
+  "resourceGroup": "tanvir",
+  "roleDefinitionId": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d",
+  "scope": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/tanvir/providers/Microsoft.ContainerRegistry/registries/tanvir",
+  "type": "Microsoft.Authorization/roleAssignments"
+}
+tanvir@BS-107:~$ az aks get-credentials -g tanvir -n tanvir
+The Resource 'Microsoft.ContainerService/managedClusters/tanvir' under resource group 'tanvir' was not found.
+tanvir@BS-107:~$ az aks get-credentials -g tanvir -n kube
+Merged "kube" as current context in /home/tanvir/.kube/config
+tanvir@BS-107:~$ az aks browse -g tanvir -n kube
+Merged "kube" as current context in /tmp/tmp36ohhpqc
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+^Ctanvir@BS-107:~$ kubectl apply -f .\kube-dashboard-access.yaml
+error: the path ".kube-dashboard-access.yaml" does not exist
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 workshop-on-k8s-with-aks/
+tanvir@BS-107:~$ cd workshop-on-k8s-with-aks/
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ ll
+total 4
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 ./
+drwxr-xr-x 1 tanvir tanvir 512 Jan 11 14:53 ../
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 .git/
+-rw-rw-rw- 1 tanvir tanvir 251 Jan 11 14:53 .gitignore
+drwxrwxrwx 1 tanvir tanvir 512 Jan 11 14:53 Kube/
+-rw-rw-rw- 1 tanvir tanvir 884 Jan 11 14:53 README.md
+tanvir@BS-107:~/workshop-on-k8s-with-aks$ cd Kube/
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f .\kube-dashboard-access.yaml
+error: the path ".kube-dashboard-access.yaml" does not exist
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f kube-dashboard-access.yaml
+clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ cd ../..
+tanvir@BS-107:~$ az aks browse -g tanvir -n kube
+Merged "kube" as current context in /tmp/tmpts8cte1e
+Proxy running on http://127.0.0.1:8001/
+Press CTRL+C to close the tunnel...
+^Ctanvir@BS-107:~$ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+"stable" has been added to your repositories
+tanvir@BS-107:~$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "azure-samples" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+tanvir@BS-107:~$ kubectl create ns ingress-basic
+namespace/ingress-basic created
+tanvir@BS-107:~$ helm install stable/nginx-ingress --set controller.replicaCount=2 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux --namespace ingress-basic --generate-name
+
+NAME: nginx-ingress-1578737132
+LAST DEPLOYED: Sat Jan 11 16:05:37 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+The nginx-ingress controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace ingress-basic get services -o wide -w nginx-ingress-1578737132-controller'
+
+An example Ingress that makes use of the controller:
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+tanvir@BS-107:~$
+tanvir@BS-107:~$ heml list -n ingress-basic
+
+Command 'heml' not found, did you mean:
+
+  command 'haml' from deb ruby-haml
+
+Try: sudo apt install <deb name>
+
+tanvir@BS-107:~$ helm list -n ingress-basic
+NAME                            NAMESPACE       REVISION        UPDATED                                 STATUS         CHART                                           APP VERSION
+nginx-ingress-1578737132        ingress-basic   1               2020-01-11 16:05:37.7340617 +0600 +06   deployed       nginx-ingress-1.28.2                            0.26.2
+tanvir@BS-107:~$ kubectl get service -l app=nginx-ingress --namespace ingress-basic
+NAME                                       TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+nginx-ingress-1578737132-controller        LoadBalancer   10.0.89.200    52.188.73.150   80:30695/TCP,443:31466/TCP   63s
+nginx-ingress-1578737132-default-backend   ClusterIP      10.0.196.183   <none>          80/TCP                       63s
+tanvir@BS-107:~$ kubectl get service -l app=nginx-ingress --namespace ingress-basic
+NAME                                       TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+nginx-ingress-1578737132-controller        LoadBalancer   10.0.89.200    52.188.73.150   80:30695/TCP,443:31466/TCP   3m37s
+nginx-ingress-1578737132-default-backend   ClusterIP      10.0.196.183   <none>          80/TCP                       3m37s
+tanvir@BS-107:~$ IP=52.188.73.150
+tanvir@BS-107:~$ DNSNAME=tanvir
+tanvir@BS-107:~$ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+tanvir@BS-107:~$ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+{
+  "ddosSettings": null,
+  "dnsSettings": {
+    "domainNameLabel": "tanvir",
+    "fqdn": "tanvir.eastus.cloudapp.azure.com",
+    "reverseFqdn": null
+  },
+  "etag": "W/\"367a3ae6-3e1d-4d32-ab6b-5c2bee3200ac\"",
+  "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kube_eastus/providers/Microsoft.Network/publicIPAddresses/kubernetes-aa385b4b2975847a9bd3c9695e719051",
+  "idleTimeoutInMinutes": 4,
+  "ipAddress": "52.188.73.150",
+  "ipConfiguration": {
+    "etag": null,
+    "id": "/subscriptions/7e862db6-4127-4495-a522-d82071ca3931/resourceGroups/mc_tanvir_kube_eastus/providers/Microsoft.Network/loadBalancers/kubernetes/frontendIPConfigurations/aa385b4b2975847a9bd3c9695e719051",
+    "name": null,
+    "privateIpAddress": null,
+    "privateIpAllocationMethod": null,
+    "provisioningState": null,
+    "publicIpAddress": null,
+    "resourceGroup": "mc_tanvir_kube_eastus",
+    "subnet": null
+  },
+  "ipTags": [],
+  "location": "eastus",
+  "name": "kubernetes-aa385b4b2975847a9bd3c9695e719051",
+  "provisioningState": "Succeeded",
+  "publicIpAddressVersion": "IPv4",
+  "publicIpAllocationMethod": "Static",
+  "publicIpPrefix": null,
+  "resourceGroup": "mc_tanvir_kube_eastus",
+  "resourceGuid": "eb5b20a6-8404-4965-8eb0-fe4dde073c8b",
+  "sku": {
+    "name": "Standard"
+  },
+  "tags": {
+    "kubernetes-cluster-name": "kubernetes",
+    "service": "ingress-basic/nginx-ingress-1578737132-controller"
+  },
+  "type": "Microsoft.Network/publicIPAddresses",
+  "zones": null
+}
+tanvir@BS-107:~$ helm repo add azure-samples https://azure-samples.github.io/helm-charts/
+"azure-samples" has been added to your repositories
+tanvir@BS-107:~$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "azure-samples" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+tanvir@BS-107:~$ helm install azure-samples/aks-helloworld --namespace ingress-basic --generate-name
+NAME: aks-helloworld-1578737591
+LAST DEPLOYED: Sat Jan 11 16:13:15 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+tanvir@BS-107:~$ helm install azure-samples/aks-helloworld --namespace ingress-basic  --generate-name --set title="AKS Ingress Demo" --set serviceName="ingress-demo"
+
+NAME: aks-helloworld-1578737632
+LAST DEPLOYED: Sat Jan 11 16:13:56 2020
+NAMESPACE: ingress-basic
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+tanvir@BS-107:~$
+tanvir@BS-107:~$ kubectl create namespace cert-manager
+namespace/cert-manager created
+tanvir@BS-107:~$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml --validate=false
+customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply
+namespace/cert-manager configured
+serviceaccount/cert-manager-cainjector created
+serviceaccount/cert-manager created
+serviceaccount/cert-manager-webhook created
+clusterrole.rbac.authorization.k8s.io/cert-manager-cainjector created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-cainjector created
+role.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection created
+rolebinding.rbac.authorization.k8s.io/cert-manager-cainjector:leaderelection created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-webhook:auth-delegator created
+rolebinding.rbac.authorization.k8s.io/cert-manager-webhook:webhook-authentication-reader created
+clusterrole.rbac.authorization.k8s.io/cert-manager-webhook:webhook-requester created
+role.rbac.authorization.k8s.io/cert-manager:leaderelection created
+rolebinding.rbac.authorization.k8s.io/cert-manager:leaderelection created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-issuers created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-clusterissuers created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-certificates created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-orders created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-challenges created
+clusterrole.rbac.authorization.k8s.io/cert-manager-controller-ingress-shim created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-leaderelection created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-issuers created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-clusterissuers created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-certificates created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-orders created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-challenges created
+clusterrolebinding.rbac.authorization.k8s.io/cert-manager-controller-ingress-shim created
+clusterrole.rbac.authorization.k8s.io/cert-manager-view created
+clusterrole.rbac.authorization.k8s.io/cert-manager-edit created
+service/cert-manager created
+service/cert-manager-webhook created
+deployment.apps/cert-manager-cainjector created
+deployment.apps/cert-manager created
+deployment.apps/cert-manager-webhook created
+apiservice.apiregistration.k8s.io/v1beta1.webhook.cert-manager.io created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
+validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
+tanvir@BS-107:~$ kubectl get all -n cert-manager
+NAME                                           READY   STATUS    RESTARTS   AGE
+pod/cert-manager-6b78b7c997-xhqkz              1/1     Running   0          82s
+pod/cert-manager-cainjector-54c4796c5d-fg6jq   1/1     Running   0          83s
+pod/cert-manager-webhook-77ccf5c8b4-7k2fc      1/1     Running   0          81s
+
+NAME                           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+service/cert-manager           ClusterIP   10.0.5.113    <none>        9402/TCP   85s
+service/cert-manager-webhook   ClusterIP   10.0.139.35   <none>        443/TCP    84s
+
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/cert-manager              1/1     1            1           83s
+deployment.apps/cert-manager-cainjector   1/1     1            1           84s
+deployment.apps/cert-manager-webhook      1/1     1            1           82s
+
+NAME                                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/cert-manager-6b78b7c997              1         1         1       83s
+replicaset.apps/cert-manager-cainjector-54c4796c5d   1         1         1       84s
+replicaset.apps/cert-manager-webhook-77ccf5c8b4      1         1         1       82s
+tanvir@BS-107:~$ kubectl apply -f .\cluster-issuer.yaml
+error: the path ".cluster-issuer.yaml" does not exist
+tanvir@BS-107:~$ kubectl apply -f .\.\cluster-issuer.yaml
+error: the path "..cluster-issuer.yaml" does not exist
+tanvir@BS-107:~$ kubectl apply -f .\.\.\cluster-issuer.yaml
+error: the path "...cluster-issuer.yaml" does not exist
+tanvir@BS-107:~$ cd ../../
+tanvir@BS-107:/$ ll
+total 580
+drwxr-xr-x  1 root root    512 Jan  9 18:32 ./
+drwxr-xr-x  1 root root    512 Jan  9 18:32 ../
+drwxr-xr-x  1 root root    512 Jan  9 18:32 bin/
+drwxr-xr-x  1 root root    512 May 21  2019 boot/
+drwxr-xr-x  1 root root    512 Jan 11 16:14 dev/
+drwxr-xr-x  1 root root    512 Jan 11 14:24 etc/
+drwxr-xr-x  1 root root    512 Jan  9 18:33 home/
+-rwxr-xr-x  1 root root 591344 Jan  1  1970 init*
+drwxr-xr-x  1 root root    512 May 21  2019 lib/
+drwxr-xr-x  1 root root    512 May 21  2019 lib64/
+drwxr-xr-x  1 root root    512 May 21  2019 media/
+drwxr-xr-x  1 root root    512 Jan  9 18:32 mnt/
+drwxr-xr-x  1 root root    512 Jan  9 18:37 opt/
+dr-xr-xr-x 11 root root      0 Jan 11 14:24 proc/
+drwx------  1 root root    512 May 21  2019 root/
+drwxr-xr-x  1 root root    512 Jan 11 14:24 run/
+drwxr-xr-x  1 root root    512 Jan  9 18:32 sbin/
+drwxr-xr-x  1 root root    512 Mar 21  2019 snap/
+drwxr-xr-x  1 root root    512 May 21  2019 srv/
+dr-xr-xr-x 12 root root      0 Jan 11 14:24 sys/
+drwxrwxrwt  1 root root    512 Jan 11 16:26 tmp/
+drwxr-xr-x  1 root root    512 May 21  2019 usr/
+drwxr-xr-x  1 root root    512 May 21  2019 var/
+tanvir@BS-107:/$ cd ~
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 workshop-on-k8s-with-aks/
+tanvir@BS-107:~$ cd workshop-on-k8s-with-aks/Kube/
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ kubectl apply -f cluster-issuer.yaml
+clusterissuer.cert-manager.io/letsencrypt-staging created
+tanvir@BS-107:~/workshop-on-k8s-with-aks/Kube$ cd ../..
+tanvir@BS-107:~$ cd ~
+tanvir@BS-107:~$ ll
+total 24
+drwxr-xr-x 1 tanvir tanvir  512 Jan 11 14:53 ./
+drwxr-xr-x 1 root   root    512 Jan  9 18:33 ../
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 18:45 .azure/
+-rw------- 1 tanvir tanvir 2749 Jan  9 21:05 .bash_history
+-rw-r--r-- 1 tanvir tanvir  220 Jan  9 18:33 .bash_logout
+-rw-r--r-- 1 tanvir tanvir 3771 Jan  9 18:33 .bashrc
+drwxr-xr-x 1 tanvir tanvir  512 Jan  9 19:48 .cache/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:48 .config/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:00 .kube/
+drwxrwxrwx 1 tanvir tanvir  512 Jan  9 19:10 .local/
+-rw-r--r-- 1 tanvir tanvir  807 Jan  9 18:33 .profile
+-rw-r--r-- 1 tanvir tanvir    0 Jan  9 18:33 .sudo_as_admin_successful
+-rw-rw-rw- 1 tanvir tanvir  679 Jan  9 20:34 cluster-ingress.yaml
+-rwx------ 1 tanvir tanvir 6617 Jan  9 18:49 get_helm.sh*
+-rw-rw-rw- 1 tanvir tanvir  325 Jan  9 19:10 kube-dashboard-access.yaml
+drwxrwxrwx 1 tanvir tanvir  512 Jan 11 14:53 workshop-on-k8s-with-aks/
+tanvir@BS-107:~$ kubectl apply -f cluster-issuer.yaml
+error: the path "cluster-issuer.yaml" does not exist
+tanvir@BS-107:~$ kubectl delete ns ingress-basic
+namespace "ingress-basic" deleted
+tanvir@BS-107:~$ kubectl delete ns cert-manager
+namespace "cert-manager" deleted
